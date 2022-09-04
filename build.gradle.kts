@@ -20,7 +20,13 @@ version = properties("pluginVersion")
 
 // Configure project's dependencies
 repositories {
+    mavenLocal()
+    maven(url = "https://maven.aliyun.com/repository/public")
     mavenCentral()
+}
+
+dependencies {
+    implementation("cn.hutool:hutool-core:5.8.5")
 }
 
 // Set the JVM language level used to compile sources and generate files - Java 11 is required since 2020.3

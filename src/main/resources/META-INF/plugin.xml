@@ -6,13 +6,21 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.mumuzsl.mplugin.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.mumuzsl.mplugin.services.MyProjectService"/>
-    </extensions>
+<!--    <extensions defaultExtensionNs="com.intellij">-->
+<!--        <applicationService serviceImplementation="com.github.mumuzsl.mplugin.services.MyApplicationService"/>-->
+<!--        <projectService serviceImplementation="com.github.mumuzsl.mplugin.services.MyProjectService"/>-->
+<!--    </extensions>-->
 
-    <applicationListeners>
-        <listener class="com.github.mumuzsl.mplugin.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+<!--    <applicationListeners>-->
+<!--        <listener class="com.github.mumuzsl.mplugin.listeners.MyProjectManagerListener"-->
+<!--                  topic="com.intellij.openapi.project.ProjectManagerListener"/>-->
+<!--    </applicationListeners>-->
+
+    <actions>
+        <action id="com.github.mumuzsl.mplugin.actions.ToUnderlineCaseAction"
+                class="com.github.mumuzsl.mplugin.actions.ToUnderlineCaseAction"
+                text="转下划线命名">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
 </idea-plugin>
