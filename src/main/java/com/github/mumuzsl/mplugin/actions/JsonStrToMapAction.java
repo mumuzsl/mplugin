@@ -1,6 +1,10 @@
 package com.github.mumuzsl.mplugin.actions;
 
 import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -11,13 +15,13 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+
 /**
- * 代码copy from<a href="https://github.com/JetBrains/intellij-sdk-code-samples/blob/main/editor_basics/src/main/java/org/intellij/sdk/editor/EditorIllustrationAction.java">官方示例</a>
- *
  * @auther zhaosenlin
- * @date 2022/9/4 18:10
+ * @date 2022/9/5 19:26
  */
-public class ToUnderlineCaseAction extends AnAction {
+public class JsonStrToMapAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent e) {
@@ -43,7 +47,7 @@ public class ToUnderlineCaseAction extends AnAction {
         String selectedText = primaryCaret.getSelectedText();
         int    start        = primaryCaret.getSelectionStart();
         int    end          = primaryCaret.getSelectionEnd();
-        String newStr       = StrUtil.nullToEmpty(StrUtil.toUnderlineCase(selectedText));
+        String newStr       = convert(selectedText);
         // Replace the selection with a fixed string.
         // Must do this document change in a write action context.
         WriteCommandAction.runWriteCommandAction(project, () ->
@@ -52,4 +56,22 @@ public class ToUnderlineCaseAction extends AnAction {
         // De-select the text range that was just replaced
         primaryCaret.removeSelection();
     }
+
+    private static String convert(String selectedText) {
+        TypeReference<Map<String, Object>> typeReference = new TypeReference<>() {
+        };
+        StringBuilder sb = new StringBuilder(selectedText).append("\n");
+        sb.append("Map<String, Object> map = new HashMap<String, Object>()\n");
+        try {
+            Map<String, Object> map = new ObjectMapper().readValue(selectedText, typeReference);
+            map.forEach((k, v) -> {
+                String line = StrUtil.format("map.put(\"{}\", {});\n", k, v);
+                sb.append(line);
+            });
+            return sb.toString();
+        } catch (Exception ex) {
+            return sb.append(ex.getMessage()).append("\n").toString();
+        }
+    }
+
 }

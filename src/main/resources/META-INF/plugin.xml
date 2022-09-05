@@ -22,5 +22,15 @@
                 text="转下划线命名">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
+        <action id="com.github.mumuzsl.mplugin.actions.JsonStrToMapAction"
+                class="com.github.mumuzsl.mplugin.actions.JsonStrToMapAction"
+                text="json转map">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+        <action id="com.github.mumuzsl.mplugin.actions.JsonStrToClassAction"
+                class="com.github.mumuzsl.mplugin.actions.JsonStrToClassAction"
+                text="json转字段">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
     </actions>
 </idea-plugin>
