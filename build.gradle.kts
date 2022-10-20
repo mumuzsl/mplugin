@@ -27,6 +27,8 @@ repositories {
 
 dependencies {
     implementation("cn.hutool:hutool-core:5.8.5")
+    implementation("com.hierynomus:sshj:0.34.0")
+    implementation("org.slf4j:slf4j-log4j12:2.0.2")
 }
 
 // Set the JVM language level used to compile sources and generate files - Java 11 is required since 2020.3
